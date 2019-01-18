@@ -86,6 +86,14 @@ h3 {
 
   }
   
+.btn-primary {
+    background-color: grey;
+    border: 1px solid grey;
+}
+
+.btn-link {
+    padding-left: 120px; 
+}
 
 
 
