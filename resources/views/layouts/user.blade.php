@@ -39,7 +39,7 @@
             </button>
             <div class="collapse navbar-collapse" id="navbarResponsive">
                 <ul class="navbar-nav ml-auto" >
-                    <li class="nav-item active">
+                    <li class="nav-item">
                         <a href="{{url('user/feed')}}" class="nav-link">Feed</a>
                     </li>
                     <li class="nav-item">

@@ -5,6 +5,7 @@
 
 <div class="container-fluid">
         <div class="row">
+            @if(Auth::check())
             
             <div class="col-md-3">
 
@@ -41,56 +42,28 @@
             </div>
 
             <div class="col-md-6">
-
-              @if(Auth::check()) 
-
-                <div class="card">
-                    <div class="card-body">
-                        <div class="dropdown">
-                            <button class="btn btn-dark dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                Categories
-                            </button>
-                            <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                                <a class="dropdown-item" href="{{url('user/profile')}}">All</a>
-                                <a class="dropdown-item" href="{{url('user/profile/business')}}">Business</a>
-                                <a class="dropdown-item" href="{{url('user/profile/social')}}">Social</a>
-                                <a class="dropdown-item" href="{{url('user/profile/others')}}">Others</a>
-                            </div>
+                    <div class="card">
+                        <div class="card-body">
+                            <h5 class="card-title"><b>Are you sure you want to delete this post?</b></h5>
+                            <a href="{{ URL('/user/post/delete/yes/'.$post->id )}}" class="btn btn-secondary" role="button">Yes</a>
+                            <a href="{{ URL('/user/profile')}}" class="btn btn-primary" role="button">No</a>
                         </div>
                     </div>
-                </div>
-                <hr>
-
-
-                
-                @if(count($ownPosts)!=0)
-                  @foreach ($ownPosts as $ownPost)
-                  <div class="card">
-                    @if($ownPost->photo)
-                        <img class="card-img-top" src="{{ URL::to('/') }}/images/{{ $ownPost->photo->path }}"
-                        alt="Card image cap">
-                    @endif
-                    <div class="card-body">
-                      <h5 class="card-title"><b>{{$ownPost->title}}</b></h5>
-                      <h6 class="card-title">{{$ownPost->created_at->diffForHumans()}}</h6>
-                      <hr>
-                      <p class="card-text">{{$ownPost->body}}</p>
-                      <a href="{{ URL('/user/post/delete/'.$ownPost->id )}}" class="btn btn-secondary" role="button">Delete</a>
+                    <hr>
+                    <div class="card">
+                        @if($post)
+                            @if($post->photo)
+                                <img class="card-img-top" src="{{ URL::to('/') }}/images/{{ $post->photo->path }}"
+                                alt="Card image cap">
+                            @endif
+                            <div class="card-body">
+                                <h5 class="card-title"><b>{{$post->title}}</b></h5>
+                                <h6 class="card-title">{{$post->created_at->diffForHumans()}}</h6>
+                                <hr>
+                                <p class="card-text">{{$post->body}}</p>
+                            </div>
+                        @endif
                     </div>
-                  </div>
-                  <hr>
-                  @endforeach
-                  
-                @else
-                  <div class="card">
-                    <div class="card-body">
-                      <h5 class="card-title"><b>No post to show!</b></h5>
-                      <a href="{{ url('/user/create') }}" class="btn btn-secondary" role="button">Create</a>
-                    </div>
-                  </div>
-                @endif
-              @endif 
-
             </div>
 
             <div class="col-md-3">
@@ -103,6 +76,7 @@
                     </ul>
                 </div>
             </div>
+            @endif
         </div>
 </div>
 

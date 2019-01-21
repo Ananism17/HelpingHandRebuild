@@ -1,10 +1,11 @@
 <?php
 
 namespace App\Http\Requests;
+use Auth;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class PostRequest extends FormRequest
+class UserEditRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -23,11 +24,11 @@ class PostRequest extends FormRequest
      */
     public function rules()
     {
+        $user = Auth::user();
         return [
             //
-            'title'         =>'required',
-            'body'          =>'required',
-            'category_id'   =>'required',
+            'name'  => 'required',
+            'email' => 'required|email|unique:users,email,'.$user->id,
         ];
     }
 }
