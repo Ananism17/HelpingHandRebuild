@@ -1,4 +1,4 @@
-@extends('layouts.reglayout')
+@extends('layouts.auth')
 
 @section('content')
 

@@ -15,10 +15,21 @@ Route::get('/', function () {
     return view('index');
 });
 
-// Route::get('/login', function () {
-//     return view('auth.login');
-// });
-
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
+
+Route::get('/feed', function () {
+    return view('user.profile.feed');
+});
+
+
+Route::get('/user/feed', 'UsersController@index');
+
+Route::get('/user/profile', 'UsersController@profile');
+
+Route::get('/user/create', 'UsersController@create');
+
+Route::post('/user/create', 'UsersController@store');
+
+
