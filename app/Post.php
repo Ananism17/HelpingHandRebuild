@@ -14,6 +14,8 @@ class Post extends Model
         'body',
         'photo_id',
         'category_id',
+        'required',
+        'received',
     ];
 
 

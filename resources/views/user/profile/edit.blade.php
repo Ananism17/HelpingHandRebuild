@@ -7,6 +7,7 @@
         <div class="row">
             
             <div class="col-md-3">
+                <hr>
 
                 <div class="card" style="width: 18rem;">
                     @if($user->photo)
@@ -30,17 +31,15 @@
                         @else
                             <li class="list-group-item">Nationality Not Selected</li>
                         @endif
-                        <li class="list-group-item">Donation Received: 50$</li>
-                        <li class="list-group-item">Donation Made: 1000$</li>
+                        <li class="list-group-item">Donation Received: {{$user->received}}$</li>
+                        <li class="list-group-item">Donation Made: {{$user->donated}}$</li>
+                        <li class="list-group-item">Email: {{$user->email}}</li>
                     </ul>
-                    <div class="card-body">
-                        <a href="#" class="card-link">Contact</a>
-                        <a href="#" class="card-link">Block</a>
-                    </div>
                 </div>
             </div>
         
         <div class="col-md-6">
+            <hr>
             <div class="card">
                 <form method="POST" action="{{url('user/edit')}}" enctype="multipart/form-data">
 
@@ -73,7 +72,7 @@
                             autocomplete="off" value="{{ $user->nationality}}">
                         </div>
                         <div class="form-group">
-                            <label for="photo_id">Example file input</label>
+                            <label for="photo_id"><b>Display Picture</b></label>
                             <input type="file" class="form-control-file" id="photo_id" name="photo_id">
                         </div>
 
@@ -89,10 +88,11 @@
         </div>
 
             <div class="col-md-3">
+                <hr>
                 <div class="card" style="width: 18rem;">
                     <ul class="list-group list-group-flush">
                         <a href="{{ url('/user/profile') }}" class="btn btn-dark" role="button">Timeline</a>
-                        <a href="{{ url('/user/create') }}" class="btn btn-dark" role="button">Create Post</a>
+                        <a href="{{ url('/user/post/create') }}" class="btn btn-dark" role="button">Create Post</a>
                         <a href="{{ url('/login') }}" class="btn btn-dark" role="button">Edit Profile</a>
                         <a href="{{ url('/login') }}" class="btn btn-dark" role="button">Edit Bank Information</a>
                     </ul>

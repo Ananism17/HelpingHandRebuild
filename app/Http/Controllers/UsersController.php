@@ -13,6 +13,7 @@ use App\Photo;
 use App\Category;
 use App\http\Requests\PostRequest;
 use App\http\Requests\UserEditRequest;
+use App\http\Requests\DonateRequest;
 
 class UsersController extends Controller
 {
@@ -118,6 +119,7 @@ class UsersController extends Controller
 
         $input = $request->all();
 
+
         $input['user_id'] = $user->id;
 
         
@@ -133,6 +135,8 @@ class UsersController extends Controller
         }
 
         $user->posts()->create($input);
+
+        
 
         return redirect('/user/profile');
 
@@ -190,5 +194,57 @@ class UsersController extends Controller
 
     }
         
+    public function guestProfile($id){
+        
+        $user = Auth::User();
+
+
+
+        $guest = User::where('id', $id)->get()->first();
+
+        $guestPosts = $guest->posts->sortByDesc("created_at");
+
+        if($user->id != $id)
+            return view('user.profile.guest', compact('user', 'guest', 'guestPosts'));
+        else
+            return redirect('/user/profile');
+
+
+    }
+
+    public function donate($id){
+        
+        $post = Post::where('id', $id)->get()->first();
+
+        $user = Auth::User();
+
+        return view ('user.posts.donate', compact('post', 'user'));
+    }
+
+    public function donateStore(DonateRequest $request, $id){
+        
+        $post = Post::where('id', $id)->get()->first();
+
+        $user = Auth::User();
+        $userid = $user->id;
+        $guest = $post->user;
+        $guestid = $post->user->id;
+        $amount = $request->received;
+
+        $prevGuestReceived = $guest->received;
+        $prevUserDonated = $user->donated;
+        $prevPostRceived = $post->received;
+
+        $newGuestReceived = $prevGuestReceived + $amount;
+        $newUserDonated = $prevUserDonated + $amount;
+        $newPostRceived = $prevPostRceived + $amount;
+
+        User::where('id', $guestid)->update(['received' => $newGuestReceived ]);
+        User::where('id', $userid)->update(['donated' => $newUserDonated ]);
+        Post::where('id', $id)->update(['received' => $newGuestReceived ]);
+
+        return redirect('/user/feed');
+
+    }
 
 }

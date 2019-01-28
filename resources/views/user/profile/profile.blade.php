@@ -5,9 +5,11 @@
 
 <div class="container-fluid">
         <div class="row">
+
             
             <div class="col-md-3">
 
+                <hr>
                 <div class="card" style="width: 18rem;">
                     @if($user->photo)
                     <img class="card-img-top" src="{{ URL::to('/') }}/images/{{ $user->photo->path}}" alt="Card image cap">
@@ -30,17 +32,16 @@
                         @else
                             <li class="list-group-item">Nationality Not Selected</li>
                         @endif
-                        <li class="list-group-item">Donation Received: 50$</li>
-                        <li class="list-group-item">Donation Made: 1000$</li>
+                        <li class="list-group-item">Donation Received: {{$user->received}}$</li>
+                        <li class="list-group-item">Donation Made: {{$user->donated}}$</li>
+                        <li class="list-group-item">Email: {{$user->email}}</li>
                     </ul>
-                    <div class="card-body">
-                        <a href="#" class="card-link">Contact</a>
-                        <a href="#" class="card-link">Block</a>
-                    </div>
                 </div>
             </div>
 
             <div class="col-md-6">
+
+            <hr>
 
               @if(Auth::check()) 
 
@@ -75,6 +76,11 @@
                       <h6 class="card-title">{{$ownPost->created_at->diffForHumans()}}</h6>
                       <hr>
                       <p class="card-text">{{$ownPost->body}}</p>
+                      <hr>
+                      <h6 class="card-title"><b>Amount required:</b> {{$ownPost->required}}$</h6>
+                      <hr>
+                      <h6 class="card-title"><b>Amount received:</b> {{$ownPost->received}}$</h6>
+                      <hr>
                       <a href="{{ URL('/user/post/delete/'.$ownPost->id )}}" class="btn btn-secondary" role="button">Delete</a>
                     </div>
                   </div>
@@ -85,7 +91,7 @@
                   <div class="card">
                     <div class="card-body">
                       <h5 class="card-title"><b>No post to show!</b></h5>
-                      <a href="{{ url('/user/create') }}" class="btn btn-secondary" role="button">Create</a>
+                      <a href="{{ url('/user/post/create') }}" class="btn btn-secondary" role="button">Create</a>
                     </div>
                   </div>
                 @endif
@@ -94,10 +100,11 @@
             </div>
 
             <div class="col-md-3">
+                <hr>
                 <div class="card" style="width: 18rem;">
                     <ul class="list-group list-group-flush">
                         <a href="{{ url('/user/profile') }}" class="btn btn-dark" role="button">Timeline</a>
-                        <a href="{{ url('/user/create') }}" class="btn btn-dark" role="button">Create Post</a>
+                        <a href="{{ url('/user/post/create') }}" class="btn btn-dark" role="button">Create Post</a>
                         <a href="{{ url('/user/edit') }}" class="btn btn-dark" role="button">Edit Profile</a>
                         <a href="{{ url('/login') }}" class="btn btn-dark" role="button">Edit Bank Information</a>
                     </ul>
